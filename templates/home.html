@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %} | Home {% endblock %}
+{% block content %}
+    <p>This is supposed to be the home page.</p>
+    {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    {% endif %}
+    {% if request.user.is_authenticated %}
+        <h1>
+            Hi, {{ request.user.username }}!
+        </h1>
+    {% endif %}
+    {% if user.profile.profile_picture %}
+        <div class="profile-pic">
+            <img src="{{ user.profile.profile_picture.url }}" class="profile-pic-img" alt="Profile Picture" width="250" height="250">   
+        </div> 
+    {% endif %}
+    {% if request.user.is_authenticated %}
+        <div class="form">
+            <a href="{% url 'create_post' %}">Create Post</a>
+        </div>
+    {% endif %}
+    <div class="chat-container">
+        {% for post in posts %}
+        <div class="posts">
+            <img src="{{ post.member.profile.profile_picture.url }}" class="profile-pic-img-mini">
+            <b>{{ post.member.username }}</b>
+            <br>
+            <b>{{ post.created_at }}</b>
+            <br>
+            <br>
+            <p>{{ post.content }}</p>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}

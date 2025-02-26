@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %} | Create Post {% endblock %}
+{% block content %}
+    <p>This is supposed to be the post creation page.</p>
+    {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    {% endif %}
+    {% if request.user.is_authenticated %}
+        <h1>
+            {{ request.user.username }}
+        </h1>
+    {% endif %}
+    {% if user.profile.profile_picture %}
+        <div class="profile-pic">
+            <img src="{{ user.profile.profile_picture.url }}" class="profile-pic-img" alt="Profile Picture" width="250" height="250">   
+        </div> 
+    {% endif %}
+    <div class="create-post">
+        <form class="form" method="post">
+            {% csrf_token %}
+            <textarea name="content" placeholder="Tell your friends!" rows="4" cols="50"></textarea>
+            <button type="submit">Post</button>
+        </form>
+    </div>
+{% endblock %}

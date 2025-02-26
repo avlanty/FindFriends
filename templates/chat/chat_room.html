@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %} | {{ room_name }} {% endblock %}
+{% block content %}
+    <p>This is supposed to be the live chat room page.</p>
+    <div class="chat-container">
+        <div class="message">
+            {% for old_msg in old_messages %}
+                <div class="{% if old_msg.sender == user.username %}send{% else %}receive{% endif %}">
+                    <p>{{ old_msg.message }}</p>
+                    {% if old_msg.sender != user %}
+                        <p><strong>-{{ old_msg.sender }}</strong></p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="form">
+        <form class="form" id="message-form" method="post">
+            {% csrf_token %}
+            <textarea name="message" id="msg"></textarea>
+            <button class="submit">Send</button>
+        </form>
+    </div>
+    <script>
+        function scrollToBottom() {
+            var chatContainer = document.querySelector('.chat-container');
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+        const websocketProtocol = window.location.protocol === "https:" ? "wss" : "ws";
+        const wsEndpoint = `${websocketProtocol}://${window.location.host}/ws/notification/{{room_name}}/`;
+        const socket = new WebSocket(wsEndpoint);
+        document.getElementById('message-form').addEventListener('submit', function(event){
+            event.preventDefault();
+            const message = document.getElementById('msg').value;
+            socket.send(
+                JSON.stringify({
+                    'message': message,
+                    'room_name': '{{ room_name }}',
+                    'sender': '{{ user.username }}',
+                })
+            );
+        });
+        socket.addEventListener("message", (event) => {
+            const messageData = JSON.parse(event.data)['message'];
+            var sender = messageData['sender'];
+            var message = messageData['message'];
+            if (sender == '{{ user.username }}'){
+                document.getElementById('msg').value = '';
+            }
+            var messageDiv = document.querySelector('.message');
+            if (sender != '{{ user.username }}') { 
+                messageDiv.innerHTML += '<div class="receive">' + message + '<br>' +'<strong>-' + sender + '</strong></p></div>';
+            } else {
+                messageDiv.innerHTML += '<div class="send">' + message + '</p></div>';
+            }
+            scrollToBottom();
+        });
+    </script>
+{% endblock %}

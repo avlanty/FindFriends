@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %} | Login {% endblock %}
+{% block content %}
+    <p>This is supposed to be the log in page.</p>
+    {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    {% endif %}
+    <div class="form">
+        <form class="form" action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+                {{ form.as_p }}
+            <button type="submit">Submit</button>
+            <a href="{% url 'password_reset' %}">Forgot Password?</a>
+            <p>Don't have an account? <a href="{% url 'register' %}">Register here</a>.</p>
+        </form>
+    </div>
+{% endblock %}

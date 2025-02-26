@@ -1,0 +1,92 @@
+
+html, body {
+    text-align: center;
+    height: 100%;
+}       
+
+div.form {
+    text-align: center;
+    padding: 50px;
+}
+
+form.form {
+    display: flex;
+    flex-direction:column;
+    margin: auto;
+    gap: 20px;
+    max-width: 300px;
+}
+
+.profile-pic-img {
+    width: 250px; /* Ensure width and height are equal */
+    height: 250px;
+    object-fit: cover; /* Ensures image fills the circle without stretching */
+    border-radius: 50%; /* Creates the circle */
+    border: 3px solid #ddd; /* Optional: Add a border around the circle */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Optional: Add a subtle shadow */
+}
+
+.profile-pic-img-mini {
+    width: 25px; /* Ensure width and height are equal */
+    height: 25px;
+    object-fit: cover; /* Ensures image fills the circle without stretching */
+    border-radius: 50%; /* Creates the circle */
+}
+
+div.posts {
+    text-align: center;
+    padding: 20px;
+    background-color: grey;
+    width: 300px;
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* Scrollable chat container */
+.chat-container {
+    width: 100%;
+    max-width: 800px;
+    height: 400px; /* Adjust height as needed */
+    margin: 0 auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    overflow-y: auto; /* Enables scrolling */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Center the whole message container */
+.message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px; /* Optional: limits the width of the chat */
+    margin: 0 auto;
+    padding: 10px;
+}
+
+/* Received messages (left) */
+div.receive {
+    align-self: flex-start;
+    margin: 5px 0;
+    background-color: lightgray;
+    width: fit-content;
+    max-width: 60%;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+/* Sent messages (right) */
+div.send {
+    align-self: flex-end;
+    margin: 5px 0;
+    background-color: lightskyblue;
+    width: fit-content;
+    max-width: 60%;
+    padding: 10px;
+    border-radius: 10px;
+}

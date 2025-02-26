@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %} | Profile {% endblock %}
+{% block content %}
+    <p>This is supposed to be the profile page.</p>
+    {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    {% endif %}
+    {% if request.user.is_authenticated %}
+    <div class="form">
+        <h1>Hi, {{ request.user.username }}!</h1>
+        <form class="form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% if user.profile.profile_picture %}
+                <div class="profile-pic">
+                    <img src="{{ user.profile.profile_picture.url }}" class="profile-pic-img" alt="Profile Picture" width="250" height="250">    
+                </div> 
+            {% endif %}
+            <input type="file" name="upload" id="upload" accept="image/*">
+            <p>Bio: {{ request.user.profile.bio }}</p>
+            <input type="text" name="bio" id="bio" placeholder="Bio">
+            <p>🎂: {{ request.user.profile.date_of_birth }}</p>
+            <input type="date" name="date_of_birth" id="date_of_birth">
+            <button type="submit">Save</button>
+        </form>
+    </div>
+    {% endif %}
+{% endblock %}

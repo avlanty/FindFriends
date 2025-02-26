@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %} | Register {% endblock %}
+{% block content %}
+    <p>This is supposed to be the registration page.</p>
+    {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    {% endif %}
+    <div class="form">
+        <form class="form" action="{% url 'register' %}" method="post">
+            {% csrf_token %}
+                {{ form.as_p }}    
+            <button type="submit">Submit</button>
+            <p>Already have an account? <a href="{% url 'login' %}">Login here</a>.</p>
+        </form>
+    </div>
+{% endblock %}

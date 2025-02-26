@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %} | Create Room {% endblock %}
+{% block content %}
+    <p>This is supposed to be the join live chat room page.</p>
+    {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    {% endif %}
+    {% if request.user.is_authenticated %}
+        <h1>
+            Hi, {{ request.user.username }}!
+        </h1>
+    {% endif %}
+    {% if user.profile.profile_picture %}
+        <div class="profile-pic">
+            <img src="{{ user.profile.profile_picture.url }}" class="profile-pic-img" alt="Profile Picture" width="250" height="250">   
+        </div> 
+    {% endif %}
+    <div class="room_name">
+        {% for room in room %}
+            <a href="{% url 'chat_room' room.room_name username %}" name="room">{{ room.room_name }}</a>
+        {% endfor %}
+    </div>
+    <div class="form">
+        <form class="form" action="" method="post">
+            {% csrf_token %}
+            <label for="">Room name:</label><br>
+            <input type="text" placeholder="Room Name" name="room" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+{% endblock %}
